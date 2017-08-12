@@ -23,16 +23,19 @@ namespace BTB
     {
         [DllImport("CH341A_DLL.dll")]
         public static extern int I2C_HOST_INITIALIZATION_DLL(int iIndex);
+        [DllImport("CH341A_DLL.dll")]
+        public static extern int I2C_BYTE_WRITE_DLL(int iIndex, int device_addr, int rom_startaddress, byte rom_value, float T_wait);
 
         private List<int> _usbList;
         private int _USBHandle;
-        private uA6_APD my_uA6_APDMCU_0x76;
+        private APDMCU_0x76_Manage my_uA6_APDMCU_0x76;
+        private const int APDMCU = 0x76;
 
         public Form_main()
         {
             InitializeComponent();
             _usbList = new List<int>();
-            my_uA6_APDMCU_0x76 = new uA6_APD();
+            my_uA6_APDMCU_0x76 = new APDMCU_0x76_Manage();
         }
 
         private void btn_searchUSB_Click(object sender, EventArgs e)
@@ -84,14 +87,31 @@ namespace BTB
             float T_wait = 0.1f;
 
             //reg_add = (int)(&my_uA6_APDMCU_0x76.sStrA6.RX_SHDN_Control) - (int)(&my_uA6_APDMCU_0x76.sStrA6.FirstByte);
+            reg_add = my_uA6_APDMCU_0x76.RX_SHDN_Control_Index;
 
             if (btn_power.Text == "ON")
             {
-                btn_power.Text = "OFF";
+                error = I2C_BYTE_WRITE_DLL(_USBHandle, APDMCU, reg_add, 0x00, T_wait);
+                if(error != -1)
+                {
+                    btn_power.Text = "OFF";
+                }
+                else
+                {
+                    tb_show.Text += "turn off the APD supply voltage failed!\r\n";
+                }
             }
             else
             {
-                btn_power.Text = "ON";
+                error = I2C_BYTE_WRITE_DLL(_USBHandle, APDMCU, reg_add, 0x01, T_wait);
+                if (error != -1)
+                {
+                    btn_power.Text = "ON";
+                }
+                else
+                {
+                    tb_show.Text += "turn on the APD supply voltage failed!\r\n";
+                }
             }
         }
 
