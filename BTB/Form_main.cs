@@ -25,9 +25,10 @@ namespace BTB
         public static extern int I2C_HOST_INITIALIZATION_DLL(int iIndex);
         [DllImport("CH341A_DLL.dll")]
         public static extern int I2C_BYTE_WRITE_DLL(int iIndex, int device_addr, int rom_startaddress, byte rom_value, float T_wait);
-
         [DllImport("CH341A_DLL.dll")]
         public static extern int I2C_BYTEs_READ_DLL(int iIndex, int device_addr, int rom_startaddress, int rom_Length, ref byte rom_value_arr);
+        [DllImport("CH341A_DLL.dll")]
+        public static extern int I2C_4BYTEs_READ_DLL(int iIndex, int device_addr, int rom_startaddress, ref byte rom_value1, ref byte rom_value2, ref byte rom_value3, ref byte rom_value4);
 
         private List<int> _usbList;
         private int _USBHandle;
@@ -35,6 +36,7 @@ namespace BTB
         private TOSAMCU_0x74_Manage my_uA6_TOSAMCU_0x74;
         private const int APDMCU = 0x76;
         private const int TOSAMCU = 0x74;
+        private const string FLOAT_ACC = "F4";
 
         public Form_main()
         {
@@ -124,7 +126,7 @@ namespace BTB
         private void btn_get_LD_Click(object sender, EventArgs e)
         {
             int error;
-            float vFloat = 0.001234f;
+            float vFloat;
 
             /*var bytes = BitConverter.GetBytes(0x3aa1be2b);
             float v1 = MyFunc.ToFloat(bytes[0], bytes[1], bytes[2], bytes[3]);
@@ -137,11 +139,61 @@ namespace BTB
             vFloat = my_uA6_TOSAMCU_0x74.LD_Current_Real;
             if (error != -1)
             {
-                tb_LD.Text = vFloat.ToString("F6");
+                tb_LD.Text = vFloat.ToString(FLOAT_ACC);
             }
             else
             {
                 tb_show.Text += "cannot get LD Current!\r\n";
+            }
+        }
+
+        private void btn_get_PD_Click(object sender, EventArgs e)
+        {
+            int error;
+            float vPD_CurrentG;
+
+            //Get the TOSA PD current
+            error = I2C_BYTEs_READ_DLL(_USBHandle, TOSAMCU, 0, 256, ref my_uA6_TOSAMCU_0x74.pStrA6[0]);
+            vPD_CurrentG = my_uA6_TOSAMCU_0x74.PD_Current_ADC_G_Real;
+            if(error != -1)
+            {
+                tb_PD.Text = vPD_CurrentG.ToString(FLOAT_ACC);
+            }
+            else
+            {
+                tb_show.Text += "cannot get PD Current!\r\n";
+            }
+        }
+
+        private void btn_get_ROPD_Click(object sender, EventArgs e)
+        {
+            int reg_add;
+            int error;
+            float vAPD_Current;
+
+            //Get the APD working current
+            reg_add = my_uA6_APDMCU_0x76.VAPD_I_G_Real_Index;
+            error = I2C_4BYTEs_READ_DLL(_USBHandle, APDMCU, reg_add, ref my_uA6_APDMCU_0x76.pStrA6[reg_add + 1], ref my_uA6_APDMCU_0x76.pStrA6[reg_add + 2], ref my_uA6_APDMCU_0x76.pStrA6[reg_add], ref my_uA6_APDMCU_0x76.pStrA6[reg_add + 3]);
+            vAPD_Current = my_uA6_APDMCU_0x76.VAPD_I_G_Real;
+            if (error != -1)
+            {
+                tb_ROPD.Text = vAPD_Current.ToString(FLOAT_ACC);
+            }
+            else
+            {
+                tb_show.Text += "cannot get the VAPD Current!\r\n";
+            }
+
+            reg_add = my_uA6_APDMCU_0x76.VAPD_I_S_Real_Index;
+            error = I2C_4BYTEs_READ_DLL(_USBHandle, APDMCU, reg_add, ref my_uA6_APDMCU_0x76.pStrA6[reg_add + 1], ref my_uA6_APDMCU_0x76.pStrA6[reg_add + 2], ref my_uA6_APDMCU_0x76.pStrA6[reg_add], ref my_uA6_APDMCU_0x76.pStrA6[reg_add + 3]);
+            vAPD_Current = my_uA6_APDMCU_0x76.VAPD_I_S_Real;
+            if (error != -1)
+            {
+                tb_ROPD_S.Text = vAPD_Current.ToString(FLOAT_ACC);
+            }
+            else
+            {
+                tb_show.Text += "cannot get the VAPD Current for small signal!\r\n";
             }
         }
     }

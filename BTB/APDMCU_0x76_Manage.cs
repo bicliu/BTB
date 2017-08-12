@@ -127,6 +127,31 @@ namespace BTB
             get { return pStrA6[sAPD_Vbr_Test_Control_Byte_Index]; }
             set { pStrA6[sAPD_Vbr_Test_Control_Byte_Index] = value.Ctrl_Byte; }
         }*/
+        /*
+         * ...
+         * */
+        //float	VAPD_I_G_Real;						// A6H[68~71], 4byte, unit V
+        public int VAPD_I_G_Real_Index { get { return 68; } }
+        public float VAPD_I_G_Real
+        {
+            get { return MyFunc.Bs2F(pStrA6[VAPD_I_G_Real_Index], pStrA6[VAPD_I_G_Real_Index + 1], pStrA6[VAPD_I_G_Real_Index + 2], pStrA6[VAPD_I_G_Real_Index + 3]); }
+            set
+            {
+                for (int i = 0; i < 4; i++)
+                    pStrA6[VAPD_I_G_Real_Index + i] = MyFunc.F2Bi(i, value);
+            }
+        }
+        //float	VAPD_I_S_Real;						// A6H[72~75], 4byte, unit V
+        public int VAPD_I_S_Real_Index { get { return 72; } }
+        public float VAPD_I_S_Real
+        {
+            get { return MyFunc.Bs2F(pStrA6[VAPD_I_S_Real_Index], pStrA6[VAPD_I_S_Real_Index + 1], pStrA6[VAPD_I_S_Real_Index + 2], pStrA6[VAPD_I_S_Real_Index + 3]); }
+            set
+            {
+                for (int i = 0; i < 4; i++)
+                    pStrA6[VAPD_I_S_Real_Index + i] = MyFunc.F2Bi(i, value);
+            }
+        }
     }
 
     [StructLayout(LayoutKind.Sequential)]

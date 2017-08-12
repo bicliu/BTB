@@ -33,5 +33,16 @@ namespace BTB
                     pStrA6[LD_Current_Real_Index + i] = MyFunc.F2Bi(i, value);
             }
         }
+        //float	PD_Current_ADC_G_Real;						// A6H[76~79], 4byte, unit V
+        public int PD_Current_ADC_G_Real_Index { get { return 76; } }
+        public float PD_Current_ADC_G_Real
+        {
+            get { return MyFunc.Bs2F(pStrA6[PD_Current_ADC_G_Real_Index], pStrA6[PD_Current_ADC_G_Real_Index + 1], pStrA6[PD_Current_ADC_G_Real_Index + 2], pStrA6[PD_Current_ADC_G_Real_Index + 3]); }
+            set
+            {
+                for (int i = 0; i < 4; i++)
+                    pStrA6[PD_Current_ADC_G_Real_Index + i] = MyFunc.F2Bi(i, value);
+            }
+        }
     }
 }

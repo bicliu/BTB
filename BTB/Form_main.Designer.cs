@@ -45,6 +45,7 @@
             this.tb_LD = new System.Windows.Forms.TextBox();
             this.tb_PD = new System.Windows.Forms.TextBox();
             this.tb_ROPD = new System.Windows.Forms.TextBox();
+            this.tb_ROPD_S = new System.Windows.Forms.TextBox();
             this.gb_prepare.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -154,6 +155,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.tb_ROPD_S);
             this.groupBox1.Controls.Add(this.tb_ROPD);
             this.groupBox1.Controls.Add(this.tb_PD);
             this.groupBox1.Controls.Add(this.tb_LD);
@@ -185,6 +187,7 @@
             this.btn_get_PD.TabIndex = 1;
             this.btn_get_PD.Text = "PD";
             this.btn_get_PD.UseVisualStyleBackColor = true;
+            this.btn_get_PD.Click += new System.EventHandler(this.btn_get_PD_Click);
             // 
             // btn_get_ROPD
             // 
@@ -194,6 +197,7 @@
             this.btn_get_ROPD.TabIndex = 2;
             this.btn_get_ROPD.Text = "RO_PD";
             this.btn_get_ROPD.UseVisualStyleBackColor = true;
+            this.btn_get_ROPD.Click += new System.EventHandler(this.btn_get_ROPD_Click);
             // 
             // tb_LD
             // 
@@ -215,6 +219,13 @@
             this.tb_ROPD.Name = "tb_ROPD";
             this.tb_ROPD.Size = new System.Drawing.Size(100, 21);
             this.tb_ROPD.TabIndex = 5;
+            // 
+            // tb_ROPD_S
+            // 
+            this.tb_ROPD_S.Location = new System.Drawing.Point(229, 96);
+            this.tb_ROPD_S.Name = "tb_ROPD_S";
+            this.tb_ROPD_S.Size = new System.Drawing.Size(100, 21);
+            this.tb_ROPD_S.TabIndex = 6;
             // 
             // Form_main
             // 
@@ -256,6 +267,7 @@
         private System.Windows.Forms.Button btn_get_ROPD;
         private System.Windows.Forms.Button btn_get_PD;
         private System.Windows.Forms.Button btn_get_LD;
+        private System.Windows.Forms.TextBox tb_ROPD_S;
     }
 }
 
