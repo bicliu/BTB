@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 
 namespace BTB
 {
     class APDMCU_0x76_Manage
     {
-        public byte[] pStrA6 = new byte[255];
+        public byte[] pStrA6 = new byte[256];
 
         public APDMCU_0x76_Manage()
         {
@@ -113,6 +114,36 @@ namespace BTB
         //INT8U   RX_SHDN_Control;			// A6H[28], 1byte, if 0x01, APD on, or else would be off
         public int RX_SHDN_Control_Index { get { return 28; } }
         public byte RX_SHDN_Control { get { return pStrA6[RX_SHDN_Control_Index]; } set { pStrA6[RX_SHDN_Control_Index] = value; } }
+        //INT8U   APD_VBR_Target_Current;		// A6H[29], 1byte, uA as the target
+        public int APD_VBR_Target_Current_Index { get { return 29; } }
+        public byte APD_VBR_Target_Current { get { return pStrA6[APD_VBR_Target_Current_Index]; } set { pStrA6[APD_VBR_Target_Current_Index] = value; } }
+        //INT8U Rerserved30;					// A6H[30], 1byte
+        public int Rerserved30_Index { get { return 30; } }
+        public byte Rerserved30 { get { return pStrA6[Rerserved30_Index]; } set { pStrA6[Rerserved30_Index] = value; } }
+        //struct  APD_Vbr_Test_Control_Byte sAPD_Vbr_Test_Control_Byte;					// A6H[31], 1byte
+        public int sAPD_Vbr_Test_Control_Byte_Index { get { return 31; } }
+        /*public APD_Vbr_Test_Control_Byte sAPD_Vbr_Test_Control_Byte
+        {
+            get { return pStrA6[sAPD_Vbr_Test_Control_Byte_Index]; }
+            set { pStrA6[sAPD_Vbr_Test_Control_Byte_Index] = value.Ctrl_Byte; }
+        }*/
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct APD_Vbr_Test_Control_Byte
+    {
+        /*byte Start_Stop_Vbr_test:1;    //Auto Clear after the Vbr test is stoped. 1: start Vbr, and will be auto clear to zero when Vbr test starts.
+        byte Manual_Auto_Control :1 ;
+        byte Vbt_Test_Done:1;  //done: 0; 1: is in process
+        byte Vapd_Setting_Done :1;
+        byte Reserved1:4;*/
+        private byte  key;
+        public byte Start_Stop_Vbr_test { set { key |= (byte)((value & 1) << 0); } get { return (byte)((key >> 0) & 1); } }
+        public byte Manual_Auto_Control { set { key |= (byte)((value & 1) << 1); } get { return (byte)((key >> 1) & 1); } }
+        public byte Vbt_Test_Done { set { key |= (byte)((value & 1) << 2); } get { return (byte)((key >> 0) & 2); } }
+        public byte Vapd_Setting_Done { set { key |= (byte)((value & 1) << 3); } get { return (byte)((key >> 3) & 1); } }
+        public byte Reserved1 { set { key |= (byte)((value & 0xF) << 4); } get { return (byte)((key >> 4) & 0xF); } }
+        public byte Ctrl_Byte { get { return key; } }
     }
 
 }

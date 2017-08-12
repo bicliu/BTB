@@ -26,16 +26,22 @@ namespace BTB
         [DllImport("CH341A_DLL.dll")]
         public static extern int I2C_BYTE_WRITE_DLL(int iIndex, int device_addr, int rom_startaddress, byte rom_value, float T_wait);
 
+        [DllImport("CH341A_DLL.dll")]
+        public static extern int I2C_BYTEs_READ_DLL(int iIndex, int device_addr, int rom_startaddress, int rom_Length, ref byte rom_value_arr);
+
         private List<int> _usbList;
         private int _USBHandle;
         private APDMCU_0x76_Manage my_uA6_APDMCU_0x76;
+        private TOSAMCU_0x74_Manage my_uA6_TOSAMCU_0x74;
         private const int APDMCU = 0x76;
+        private const int TOSAMCU = 0x74;
 
         public Form_main()
         {
             InitializeComponent();
             _usbList = new List<int>();
             my_uA6_APDMCU_0x76 = new APDMCU_0x76_Manage();
+            my_uA6_TOSAMCU_0x74 = new TOSAMCU_0x74_Manage();
         }
 
         private void btn_searchUSB_Click(object sender, EventArgs e)
@@ -115,9 +121,32 @@ namespace BTB
             }
         }
 
+        private void btn_get_LD_Click(object sender, EventArgs e)
+        {
+            int error;
+            float vFloat = 0.001234f;
+
+            /*var bytes = BitConverter.GetBytes(0x3aa1be2b);
+            float v1 = MyFunc.ToFloat(bytes[0], bytes[1], bytes[2], bytes[3]);
+
+            tb_LD.Text = v1.ToString("F6");
+            var v = BitConverter.ToSingle(bytes, 0);
+            tb_PD.Text = v.ToString("F6");*/
+            //Get the TOSA forwared voltage
+            error = I2C_BYTEs_READ_DLL(_USBHandle, TOSAMCU, 0, 256, ref my_uA6_TOSAMCU_0x74.pStrA6[0]);
+            vFloat = my_uA6_TOSAMCU_0x74.LD_Current_Real;
+            if (error != -1)
+            {
+                tb_LD.Text = vFloat.ToString("F6");
+            }
+            else
+            {
+                tb_show.Text += "cannot get LD Current!\r\n";
+            }
+        }
     }
 
-    
+
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public struct strA6_APDMCU_0x76 //APD Control Circuit
@@ -214,22 +243,6 @@ namespace BTB
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 36)]
         public INT8U Reserved188to255;         // A6H[220~255], 36byte 
                                                //flash definition for calibration use from 188bytes
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public struct APD_Vbr_Test_Control_Byte
-    {
-        /*INT8U Start_Stop_Vbr_test:1;    //Auto Clear after the Vbr test is stoped. 1: start Vbr, and will be auto clear to zero when Vbr test starts.
-        INT8U Manual_Auto_Control :1 ;
-        INT8U Vbt_Test_Done:1;  //done: 0; 1: is in process
-        INT8U Vapd_Setting_Done :1;
-        INT8U Reserved1:4;*/
-        private byte key;
-        public INT8U Start_Stop_Vbr_test { set { key |= (INT8U)((value & 1) << 0); } get { return (INT8U)((key >> 0) & 1); } }
-        public INT8U Manual_Auto_Control { set { key |= (INT8U)((value & 1) << 1); } get { return (INT8U)((key >> 1) & 1); } }
-        public INT8U Vbt_Test_Done { set { key |= (INT8U)((value & 1) << 2); } get { return (INT8U)((key >> 0) & 2); } }
-        public INT8U Vapd_Setting_Done { set { key |= (INT8U)((value & 1) << 3); } get { return (INT8U)((key >> 3) & 1); } }
-        public INT8U Reserved1 { set { key |= (INT8U)((value & 0xF) << 4); } get { return (INT8U)((key >> 4) & 0xF); } }
     }
 
     [StructLayout(LayoutKind.Explicit)]
