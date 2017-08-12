@@ -36,7 +36,7 @@ namespace BTB
         private TOSAMCU_0x74_Manage my_uA6_TOSAMCU_0x74;
         private const int APDMCU = 0x76;
         private const int TOSAMCU = 0x74;
-        private const string FLOAT_ACC = "F4";
+        private const string FLOAT_ACC = "F6";
 
         public Form_main()
         {
@@ -173,7 +173,7 @@ namespace BTB
 
             //Get the APD working current
             reg_add = my_uA6_APDMCU_0x76.VAPD_I_G_Real_Index;
-            error = I2C_4BYTEs_READ_DLL(_USBHandle, APDMCU, reg_add, ref my_uA6_APDMCU_0x76.pStrA6[reg_add + 1], ref my_uA6_APDMCU_0x76.pStrA6[reg_add + 2], ref my_uA6_APDMCU_0x76.pStrA6[reg_add], ref my_uA6_APDMCU_0x76.pStrA6[reg_add + 3]);
+            error = I2C_4BYTEs_READ_DLL(_USBHandle, APDMCU, reg_add, ref my_uA6_APDMCU_0x76.pStrA6[reg_add], ref my_uA6_APDMCU_0x76.pStrA6[reg_add + 1], ref my_uA6_APDMCU_0x76.pStrA6[reg_add + 2], ref my_uA6_APDMCU_0x76.pStrA6[reg_add + 3]);
             vAPD_Current = my_uA6_APDMCU_0x76.VAPD_I_G_Real;
             if (error != -1)
             {
@@ -185,7 +185,7 @@ namespace BTB
             }
 
             reg_add = my_uA6_APDMCU_0x76.VAPD_I_S_Real_Index;
-            error = I2C_4BYTEs_READ_DLL(_USBHandle, APDMCU, reg_add, ref my_uA6_APDMCU_0x76.pStrA6[reg_add + 1], ref my_uA6_APDMCU_0x76.pStrA6[reg_add + 2], ref my_uA6_APDMCU_0x76.pStrA6[reg_add], ref my_uA6_APDMCU_0x76.pStrA6[reg_add + 3]);
+            error = I2C_4BYTEs_READ_DLL(_USBHandle, APDMCU, reg_add, ref my_uA6_APDMCU_0x76.pStrA6[reg_add], ref my_uA6_APDMCU_0x76.pStrA6[reg_add + 1], ref my_uA6_APDMCU_0x76.pStrA6[reg_add + 2], ref my_uA6_APDMCU_0x76.pStrA6[reg_add + 3]);
             vAPD_Current = my_uA6_APDMCU_0x76.VAPD_I_S_Real;
             if (error != -1)
             {
