@@ -36,7 +36,7 @@ namespace BTB
         private TOSAMCU_0x74_Manage my_uA6_TOSAMCU_0x74;
         private const int APDMCU = 0x76;
         private const int TOSAMCU = 0x74;
-        private const string FLOAT_ACC = "F6";
+        private const string FLOAT_ACC = "F4";
 
         public Form_main()
         {
@@ -78,7 +78,7 @@ namespace BTB
         private void tb_TextChanged(object sender, EventArgs e)
         {
             TextBox tb = (TextBox)sender;
-            tb.SelectionStart = tb.Text.Length - 1;
+            tb.SelectionStart = tb.Text.Length;
             tb.ScrollToCaret();
         }
 
@@ -154,7 +154,7 @@ namespace BTB
 
             //Get the TOSA PD current
             error = I2C_BYTEs_READ_DLL(_USBHandle, TOSAMCU, 0, 256, ref my_uA6_TOSAMCU_0x74.pStrA6[0]);
-            vPD_CurrentG = my_uA6_TOSAMCU_0x74.PD_Current_ADC_G_Real;
+            vPD_CurrentG = (float)(Math.Pow(10.0, my_uA6_TOSAMCU_0x74.PD_Current_ADC_G_Real));
             if(error != -1)
             {
                 tb_PD.Text = vPD_CurrentG.ToString(FLOAT_ACC);
@@ -200,6 +200,11 @@ namespace BTB
         public void ShowLog(string str)
         {
             tb_show.Text += str;
+        }
+
+        private void btn_clearlog_Click(object sender, EventArgs e)
+        {
+            tb_show.Text = "";
         }
     }
 
