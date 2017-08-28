@@ -66,7 +66,7 @@ namespace BTB
 
             if(cbb_usblist.Items.Count == 0)
             {
-                tb_show.Text += "没有找到USB设备!\r\n";
+                ShowLog("没有找到USB设备!\r\n");
             }
             else
             {
@@ -106,7 +106,7 @@ namespace BTB
                 }
                 else
                 {
-                    tb_show.Text += "turn off the APD supply voltage failed!\r\n";
+                    ShowLog("turn off the APD supply voltage failed!\r\n");
                 }
             }
             else
@@ -118,7 +118,7 @@ namespace BTB
                 }
                 else
                 {
-                    tb_show.Text += "turn on the APD supply voltage failed!\r\n";
+                    ShowLog("turn on the APD supply voltage failed!\r\n");
                 }
             }
         }
@@ -143,7 +143,7 @@ namespace BTB
             }
             else
             {
-                tb_show.Text += "cannot get LD Current!\r\n";
+                ShowLog("cannot get LD Current!\r\n");
             }
         }
 
@@ -161,7 +161,7 @@ namespace BTB
             }
             else
             {
-                tb_show.Text += "cannot get PD Current!\r\n";
+                ShowLog("cannot get PD Current!\r\n");
             }
         }
 
@@ -181,7 +181,7 @@ namespace BTB
             }
             else
             {
-                tb_show.Text += "cannot get the VAPD Current!\r\n";
+                ShowLog("cannot get the VAPD Current!\r\n");
             }
 
             reg_add = my_uA6_APDMCU_0x76.VAPD_I_S_Real_Index;
@@ -193,13 +193,18 @@ namespace BTB
             }
             else
             {
-                tb_show.Text += "cannot get the VAPD Current for small signal!\r\n";
+                ShowLog("cannot get the VAPD Current for small signal!\r\n");
             }
+        }
+
+        public void ShowLog(string str)
+        {
+            tb_show.Text += str;
         }
     }
 
 
-
+    /*
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public struct strA6_APDMCU_0x76 //APD Control Circuit
     {
@@ -296,7 +301,8 @@ namespace BTB
         public INT8U Reserved188to255;         // A6H[220~255], 36byte 
                                                //flash definition for calibration use from 188bytes
     }
-
+    */
+    /*
     [StructLayout(LayoutKind.Explicit)]
     public struct uA6_APD
     {
@@ -306,5 +312,5 @@ namespace BTB
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)]
         public INT8U pStrA6;
     }
-
+    */
 }

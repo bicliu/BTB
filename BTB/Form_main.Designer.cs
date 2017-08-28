@@ -39,13 +39,13 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btn_get_LD = new System.Windows.Forms.Button();
-            this.btn_get_PD = new System.Windows.Forms.Button();
-            this.btn_get_ROPD = new System.Windows.Forms.Button();
-            this.tb_LD = new System.Windows.Forms.TextBox();
-            this.tb_PD = new System.Windows.Forms.TextBox();
-            this.tb_ROPD = new System.Windows.Forms.TextBox();
             this.tb_ROPD_S = new System.Windows.Forms.TextBox();
+            this.tb_ROPD = new System.Windows.Forms.TextBox();
+            this.tb_PD = new System.Windows.Forms.TextBox();
+            this.tb_LD = new System.Windows.Forms.TextBox();
+            this.btn_get_ROPD = new System.Windows.Forms.Button();
+            this.btn_get_PD = new System.Windows.Forms.Button();
+            this.btn_get_LD = new System.Windows.Forms.Button();
             this.gb_prepare.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -119,7 +119,7 @@
             this.tb_show.Multiline = true;
             this.tb_show.Name = "tb_show";
             this.tb_show.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tb_show.Size = new System.Drawing.Size(481, 138);
+            this.tb_show.Size = new System.Drawing.Size(481, 183);
             this.tb_show.TabIndex = 2;
             this.tb_show.TextChanged += new System.EventHandler(this.tb_TextChanged);
             // 
@@ -148,7 +148,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(192, 74);
+            this.tabPage2.Size = new System.Drawing.Size(966, 345);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -169,25 +169,33 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "测试";
             // 
-            // btn_get_LD
+            // tb_ROPD_S
             // 
-            this.btn_get_LD.Location = new System.Drawing.Point(17, 20);
-            this.btn_get_LD.Name = "btn_get_LD";
-            this.btn_get_LD.Size = new System.Drawing.Size(75, 23);
-            this.btn_get_LD.TabIndex = 0;
-            this.btn_get_LD.Text = "LD";
-            this.btn_get_LD.UseVisualStyleBackColor = true;
-            this.btn_get_LD.Click += new System.EventHandler(this.btn_get_LD_Click);
+            this.tb_ROPD_S.Location = new System.Drawing.Point(229, 96);
+            this.tb_ROPD_S.Name = "tb_ROPD_S";
+            this.tb_ROPD_S.Size = new System.Drawing.Size(100, 21);
+            this.tb_ROPD_S.TabIndex = 6;
             // 
-            // btn_get_PD
+            // tb_ROPD
             // 
-            this.btn_get_PD.Location = new System.Drawing.Point(17, 57);
-            this.btn_get_PD.Name = "btn_get_PD";
-            this.btn_get_PD.Size = new System.Drawing.Size(75, 23);
-            this.btn_get_PD.TabIndex = 1;
-            this.btn_get_PD.Text = "PD";
-            this.btn_get_PD.UseVisualStyleBackColor = true;
-            this.btn_get_PD.Click += new System.EventHandler(this.btn_get_PD_Click);
+            this.tb_ROPD.Location = new System.Drawing.Point(123, 96);
+            this.tb_ROPD.Name = "tb_ROPD";
+            this.tb_ROPD.Size = new System.Drawing.Size(100, 21);
+            this.tb_ROPD.TabIndex = 5;
+            // 
+            // tb_PD
+            // 
+            this.tb_PD.Location = new System.Drawing.Point(123, 57);
+            this.tb_PD.Name = "tb_PD";
+            this.tb_PD.Size = new System.Drawing.Size(100, 21);
+            this.tb_PD.TabIndex = 4;
+            // 
+            // tb_LD
+            // 
+            this.tb_LD.Location = new System.Drawing.Point(123, 20);
+            this.tb_LD.Name = "tb_LD";
+            this.tb_LD.Size = new System.Drawing.Size(100, 21);
+            this.tb_LD.TabIndex = 3;
             // 
             // btn_get_ROPD
             // 
@@ -199,33 +207,25 @@
             this.btn_get_ROPD.UseVisualStyleBackColor = true;
             this.btn_get_ROPD.Click += new System.EventHandler(this.btn_get_ROPD_Click);
             // 
-            // tb_LD
+            // btn_get_PD
             // 
-            this.tb_LD.Location = new System.Drawing.Point(123, 20);
-            this.tb_LD.Name = "tb_LD";
-            this.tb_LD.Size = new System.Drawing.Size(100, 21);
-            this.tb_LD.TabIndex = 3;
+            this.btn_get_PD.Location = new System.Drawing.Point(17, 57);
+            this.btn_get_PD.Name = "btn_get_PD";
+            this.btn_get_PD.Size = new System.Drawing.Size(75, 23);
+            this.btn_get_PD.TabIndex = 1;
+            this.btn_get_PD.Text = "PD";
+            this.btn_get_PD.UseVisualStyleBackColor = true;
+            this.btn_get_PD.Click += new System.EventHandler(this.btn_get_PD_Click);
             // 
-            // tb_PD
+            // btn_get_LD
             // 
-            this.tb_PD.Location = new System.Drawing.Point(123, 57);
-            this.tb_PD.Name = "tb_PD";
-            this.tb_PD.Size = new System.Drawing.Size(100, 21);
-            this.tb_PD.TabIndex = 4;
-            // 
-            // tb_ROPD
-            // 
-            this.tb_ROPD.Location = new System.Drawing.Point(123, 96);
-            this.tb_ROPD.Name = "tb_ROPD";
-            this.tb_ROPD.Size = new System.Drawing.Size(100, 21);
-            this.tb_ROPD.TabIndex = 5;
-            // 
-            // tb_ROPD_S
-            // 
-            this.tb_ROPD_S.Location = new System.Drawing.Point(229, 96);
-            this.tb_ROPD_S.Name = "tb_ROPD_S";
-            this.tb_ROPD_S.Size = new System.Drawing.Size(100, 21);
-            this.tb_ROPD_S.TabIndex = 6;
+            this.btn_get_LD.Location = new System.Drawing.Point(17, 20);
+            this.btn_get_LD.Name = "btn_get_LD";
+            this.btn_get_LD.Size = new System.Drawing.Size(75, 23);
+            this.btn_get_LD.TabIndex = 0;
+            this.btn_get_LD.Text = "LD";
+            this.btn_get_LD.UseVisualStyleBackColor = true;
+            this.btn_get_LD.Click += new System.EventHandler(this.btn_get_LD_Click);
             // 
             // Form_main
             // 
